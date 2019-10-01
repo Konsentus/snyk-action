@@ -3,8 +3,6 @@ description: Check dependencies with Snyk
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  env:
-    SNYK_TOKEN: ${{secrets.SNYK_TOKEN}}
 branding:
   icon: 'shield'
   color: 'purple'
