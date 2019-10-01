@@ -2,4 +2,4 @@
 
 set -eu
 
-sh -c "snyk $*"
+sh -c "snyk test $*"
