@@ -1,5 +1,8 @@
 name: Snyk Scanner
 description: Check dependencies with Snyk
+outputs:
+  results:
+    description: Any found vulnerability results
 runs:
   using: 'docker'
   image: 'Dockerfile'

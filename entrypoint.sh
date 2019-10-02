@@ -1,5 +1,11 @@
-#!/bin/sh -l
+#!/bin/sh
 
-set -eu
+OUTPUT=$(snyk test $*)
+CODE=${PIPESTATUS[0]}
 
-sh -c "snyk test $*"
+echo "${OUTPUT}"
+
+if (( ${CODE} )); then
+    snyk test --json $* | snyk-to-html -o results.html
+    echo ::set-output name=results.html
+fi
