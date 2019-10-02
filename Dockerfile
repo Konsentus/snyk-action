@@ -1,6 +1,7 @@
 FROM snyk/snyk-cli:npm
 
+ADD entrypoint.sh /entrypoint.sh
+
 RUN npm install snyk-to-html -g
 
-ADD entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
