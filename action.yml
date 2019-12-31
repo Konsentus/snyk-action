@@ -1,5 +1,11 @@
 name: Snyk Scanner
 description: Check dependencies with Snyk
+inputs:
+  options:
+    description: Additional options to pass to snyk cli tool
+  SNYK_TOKEN:
+    description: API token for using Snyk
+    required: true
 outputs:
   results:
     description: Any found vulnerability results
