@@ -1,4 +1,4 @@
-#!/bin/sh -l
+#!/bin/bash
 
 OUTPUT=$(snyk test ${INPUT_OPTIONS} $*)
 CODE=$?
