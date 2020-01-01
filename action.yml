@@ -1,9 +1,11 @@
 name: Snyk Scanner
 description: Check dependencies with Snyk
 inputs:
-  options:
-    description: Additional options to pass to snyk cli tool
-  SNYK_TOKEN:
+  package-file:
+    description: The package file to scan for dependencies
+    required: false
+    default: requirements.txt
+  snyk-token:
     description: API token for using Snyk
     required: true
 outputs:
@@ -13,7 +15,7 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   env:
-    SNYK_TOKEN: ${{ inputs.SNYK_TOKEN }}
+    SNYK_TOKEN: ${{ inputs.snyk-token }}
 branding:
   icon: 'shield'
   color: 'purple'

@@ -9,5 +9,6 @@ A GitHub action to use Snyk to check project for dependency vulnerabilities
    ```yml
    - uses: konsentus/snyk-action@master
      with:
-       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }
+       package-file: custom-requirements.txt
+       snyk-token: ${{ secrets.SNYK_TOKEN }
    ```
