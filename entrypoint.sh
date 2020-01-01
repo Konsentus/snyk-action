@@ -1,13 +1,13 @@
 #!/bin/bash
-printenv
-pip install -r ${INPUT_PACKAGE_FILE}
-OUTPUT=$(snyk test --file=${INPUT_PACKAGE_FILE} --package-manager=pip $*)
+
+pip install -r ${INPUT_PACKAGEFILE}
+OUTPUT=$(snyk test --file=${INPUT_PACKAGEFILE} --package-manager=pip $*)
 CODE=$?
 
 echo "${OUTPUT}"
 
 if [ "${CODE}" -ne "0" ]; then
-    snyk test --file=${INPUT_PACKAGE_FILE} --package-manager=pip --json $* | snyk-to-html -o results.html
+    snyk test --file=${INPUT_PACKAGEFILE} --package-manager=pip --json $* | snyk-to-html -o results.html
     echo ::set-output name=results::results.html
 fi
 
