@@ -1,4 +1,5 @@
 #!/bin/bash
+printenv
 pip install -r ${INPUT_PACKAGE_FILE}
 OUTPUT=$(snyk test --file=${INPUT_PACKAGE_FILE} --package-manager=pip $*)
 CODE=$?
