@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if [ -n "${INPUT_IGNORE}" ]; then
+    jq -c '.[]' ${INPUT_IGNORE} | while read i; do
+        snyk ignore --id=${i} --reason="Ignored by workflow" --expiry="$(date -d '+1 hour' --iso-8601=minutes)"
+    done
+fi
+
 pip install -r ${INPUT_PACKAGEFILE}
 OUTPUT=$(snyk test --file=${INPUT_PACKAGEFILE} --package-manager=pip $*)
 CODE=$?

@@ -8,6 +8,9 @@ inputs:
   snykToken:
     description: API token for using Snyk
     required: true
+  ignore:
+    description: Provide list of vulnerabilities to ignore
+    required: false
 outputs:
   results:
     description: Any found vulnerability results
