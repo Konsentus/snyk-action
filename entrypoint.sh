@@ -1,5 +1,7 @@
 #!/bin/bash
 
+pip install -r ${INPUT_PACKAGEFILE}
+
 if [ -n "${INPUT_IGNORE}" ]; then
     echo "${INPUT_IGNORE}" | jq -r '.[]' | while read i; do
         echo "Ignoring https://snyk.io/vuln/${i}"
@@ -7,7 +9,6 @@ if [ -n "${INPUT_IGNORE}" ]; then
     done
 fi
 
-pip install -r ${INPUT_PACKAGEFILE}
 OUTPUT=$(snyk test --file=${INPUT_PACKAGEFILE} --package-manager=pip $*)
 CODE=$?
 
