@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ -n "${INPUT_IGNORE}" ]; then
-    jq -c '.[]' ${INPUT_IGNORE} | while read i; do
+    jq -c '.[]' "${INPUT_IGNORE}" | while read i; do
         snyk ignore --id=${i} --reason="Ignored by workflow" --expiry="$(date -d '+1 hour' --iso-8601=minutes)"
     done
 fi
