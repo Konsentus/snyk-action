@@ -5,9 +5,6 @@ inputs:
     description: The package file to scan for dependencies
     required: false
     default: requirements.txt
-  snykToken:
-    description: API token for using Snyk
-    required: true
   ignore:
     description: Provide list of vulnerabilities to ignore
     required: false
@@ -17,8 +14,6 @@ outputs:
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  env:
-    SNYK_TOKEN: ${{ inputs.snykToken }}
 branding:
   icon: 'shield'
   color: 'purple'
