@@ -3,9 +3,9 @@
 if [ -z "${SNYK_TOKEN}" ]; then
     echo "SNYK_TOKEN not found as environment variable. Please set in workflow before continuing."
     exit 1
+else
+    echo "SNYK_TOKEN found: ${SNYK_TOKEN}"
 fi
-
-pip install -r ${INPUT_PACKAGEFILE}
 
 if [ -n "${INPUT_IGNORE}" ]; then
     echo "${INPUT_IGNORE}" | jq -r '.[]' | while read i; do
