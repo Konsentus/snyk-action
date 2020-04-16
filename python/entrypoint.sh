@@ -16,12 +16,12 @@ if [ -n "${INPUT_IGNORE}" ]; then
     done
 fi
 
-OUTPUT=$(snyk test --file=${INPUT_PACKAGEFILE} --package-manager=pip $*)
+echo "snyk test --file=${INPUT_PACKAGEFILE} --package-manager=pip ${INPUT_OPTIONS} $*"
+OUTPUT=$(snyk test --file=${INPUT_PACKAGEFILE} --package-manager=pip ${INPUT_OPTIONS} $*)
 CODE=$?
 
-echo "${OUTPUT}"
-
 if [ "${CODE}" -ne "0" ]; then
+    echo
     snyk test --file=${INPUT_PACKAGEFILE} --package-manager=pip ${INPUT_OPTIONS} --json $* | snyk-to-html -o results.html
     echo ::set-output name=results::results.html
 fi

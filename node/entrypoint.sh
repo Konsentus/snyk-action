@@ -14,7 +14,8 @@ if [ -n "${INPUT_IGNORE}" ]; then
     done
 fi
 
-OUTPUT=$(snyk test  $*)
+echo "snyk test ${INPUT_OPTIONS} $*"
+OUTPUT=$(snyk test ${INPUT_OPTIONS} $*)
 CODE=$?
 
 echo "${OUTPUT}"
