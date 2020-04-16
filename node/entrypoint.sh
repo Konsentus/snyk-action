@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ -z "${SNYK_TOKEN}" ]; then
+    echo "SNYK_TOKEN not found as environment variable. Please set in workflow before continuing."
+    exit 1
+fi
+
 if [ -n "${INPUT_IGNORE}" ]; then
     echo "${INPUT_IGNORE}" | jq -r '.[]' | while read i; do
         echo "Ignoring https://snyk.io/vuln/${i}"

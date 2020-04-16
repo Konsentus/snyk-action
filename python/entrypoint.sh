@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ -z "${SNYK_TOKEN}" ]; then
+    echo "SNYK_TOKEN not found as environment variable. Please set in workflow before continuing."
+    exit 1
+fi
+
 pip install -r ${INPUT_PACKAGEFILE}
 
 if [ -n "${INPUT_IGNORE}" ]; then
