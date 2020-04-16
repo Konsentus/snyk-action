@@ -7,6 +7,10 @@ else
     echo "SNYK_TOKEN found: ${SNYK_TOKEN}"
 fi
 
+snyk auth ${SNYK_TOKEN}
+
+pip install -r ${INPUT_PACKAGEFILE}
+
 if [ -n "${INPUT_IGNORE}" ]; then
     echo "${INPUT_IGNORE}" | jq -r '.[]' | while read i; do
         echo "Ignoring https://snyk.io/vuln/${i}"
