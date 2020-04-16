@@ -3,8 +3,6 @@
 if [ -z "${SNYK_TOKEN}" ]; then
     echo "SNYK_TOKEN not found as environment variable. Please set in workflow before continuing."
     exit 1
-else
-    echo "SNYK_TOKEN found: ${SNYK_TOKEN}"
 fi
 
 snyk auth ${SNYK_TOKEN}
@@ -24,7 +22,7 @@ CODE=$?
 echo "${OUTPUT}"
 
 if [ "${CODE}" -ne "0" ]; then
-    snyk test --file=${INPUT_PACKAGEFILE} --package-manager=pip --json $* | snyk-to-html -o results.html
+    snyk test --file=${INPUT_PACKAGEFILE} --package-manager=pip ${INPUT_OPTIONS} --json $* | snyk-to-html -o results.html
     echo ::set-output name=results::results.html
 fi
 
