@@ -4,6 +4,9 @@ inputs:
   ignore:
     description: Provide list of vulnerabilities to ignore
     required: false
+  options:
+    description: Additional options flags pass to the snyk cli (see https://support.snyk.io/hc/en-us/articles/360003812578-Our-full-CLI-reference)
+    required: false
 outputs:
   results:
     description: Any found vulnerability results
