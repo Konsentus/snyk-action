@@ -11,8 +11,8 @@ outputs:
   results:
     description: Any found vulnerability results
 runs:
-  using: "docker"
-  image: "Dockerfile"
+  using: 'docker'
+  image: 'Dockerfile'
 branding:
-  icon: "shield"
-  color: "purple"
+  icon: 'shield'
+  color: 'purple'
