@@ -13,7 +13,7 @@ if [ -n "${INPUT_SSHKEY}" ]; then
         eval $(ssh-agent)
         ssh-add ~/.ssh/id_rsa
 fi
-
+source env/bin/activate
 # pip install -r ${INPUT_PACKAGEFILE}
 
 if [ -n "${INPUT_IGNORE}" ]; then
