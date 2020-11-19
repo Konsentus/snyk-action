@@ -7,9 +7,14 @@ fi
 
 snyk auth ${SNYK_TOKEN}
 
-if [ -z "${INPUT_SKIPINSTALL}" ]; then
-    pip install -r ${INPUT_PACKAGEFILE}
+if [ -n "${INPUT_SSHKEY}" ]; then
+        mkdir ~/.ssh && chmod 700 ~/.ssh
+        echo "${INPUT_SSHKEY}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+        eval $(ssh-agent)
+        ssh-add ~/.ssh/id_rsa
 fi
+
+pip install -r ${INPUT_PACKAGEFILE}
 
 if [ -n "${INPUT_IGNORE}" ]; then
     echo "${INPUT_IGNORE}" | jq -r '.[]' | while read i; do
@@ -27,5 +32,8 @@ if [ "${CODE}" -ne "0" ]; then
     snyk test --file=${INPUT_PACKAGEFILE} --package-manager=pip ${INPUT_OPTIONS} --json $* | snyk-to-html -o results.html
     echo ::set-output name=results::results.html
 fi
+
+
+
 
 exit ${CODE}
