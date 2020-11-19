@@ -11,12 +11,15 @@ inputs:
   options:
     description: Additional options flags pass to the snyk cli (see https://support.snyk.io/hc/en-us/articles/360003812578-Our-full-CLI-reference)
     required: false
+  skipInstall:
+    description: Skips the pip install process
+    required: false
 outputs:
   results:
     description: Any found vulnerability results
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: "docker"
+  image: "Dockerfile"
 branding:
-  icon: 'shield'
-  color: 'purple'
+  icon: "shield"
+  color: "purple"

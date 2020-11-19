@@ -7,7 +7,7 @@ fi
 
 snyk auth ${SNYK_TOKEN}
 
-if [ -n "${INPUT_PACKAGEFILE}" ]; then
+if [ -z "${INPUT_SKIPINSTALL}" ]; then
     pip install -r ${INPUT_PACKAGEFILE}
 fi
 
