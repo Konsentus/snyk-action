@@ -7,7 +7,9 @@ fi
 
 snyk auth ${SNYK_TOKEN}
 
-pip install -r ${INPUT_PACKAGEFILE}
+if [ -n "${INPUT_PACKAGEFILE}" ]; then
+    pip install -r ${INPUT_PACKAGEFILE}
+fi
 
 if [ -n "${INPUT_IGNORE}" ]; then
     echo "${INPUT_IGNORE}" | jq -r '.[]' | while read i; do
