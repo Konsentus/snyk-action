@@ -14,7 +14,7 @@ if [ -n "${INPUT_SSHKEY}" ]; then
         ssh-add ~/.ssh/id_rsa
 fi
 
-pip install -r ${INPUT_PACKAGEFILE}
+# pip install -r ${INPUT_PACKAGEFILE}
 
 if [ -n "${INPUT_IGNORE}" ]; then
     echo "${INPUT_IGNORE}" | jq -r '.[]' | while read i; do
