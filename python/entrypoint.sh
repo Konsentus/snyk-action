@@ -9,7 +9,7 @@ snyk auth ${SNYK_TOKEN}
 
 if [ -n "${INPUT_LOCALPACKAGE}" ]; then
     echo "Installing local package ${INPUT_LOCALPACKAGE}"
-    pip install -e ${INPUT_LOCALPACKAGE}
+    pip install ${INPUT_LOCALPACKAGE}
 fi
 
 if [ -n "${INPUT_SSHKEY}" ]; then
