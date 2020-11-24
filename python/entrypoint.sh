@@ -34,7 +34,7 @@ echo "snyk test --file=requirements-filtered.txt --package-manager=pip ${INPUT_O
 OUTPUT=$(snyk test --file=requirements-filtered.txt --package-manager=pip ${INPUT_OPTIONS} $*)
 
 echo "snyk dependency tree:"
-echo snyk test --file="requirements-filtered.txt"  --package-manager=pip ${INPUT_OPTIONS} --print-deps
+snyk test --file="requirements-filtered.txt"  --package-manager=pip ${INPUT_OPTIONS} --print-deps
 CODE=$?
 
 if [ "${CODE}" -ne "0" ]; then
