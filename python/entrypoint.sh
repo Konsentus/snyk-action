@@ -20,7 +20,7 @@ if [ -n "${INPUT_SSHKEY}" ]; then
 fi
 
 pip freeze ${INPUT_PACKAGEFILE} | grep -iv "${INPUT_LOCALPACKAGE}" > requirements-filtered.txt
-
+echo pip freeze ${INPUT_PACKAGEFILE} | grep -iv "${INPUT_LOCALPACKAGE}" > requirements-filtered.txt
 pip install -r requirements-filtered.txt
 
 if [ -n "${INPUT_IGNORE}" ]; then
