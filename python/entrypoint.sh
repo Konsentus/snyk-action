@@ -18,8 +18,10 @@ if [ -n "${INPUT_SSHKEY}" ]; then
         eval $(ssh-agent)
         ssh-add ~/.ssh/id_rsa
 fi
-source env/bin/activate
-pip install -r ${INPUT_PACKAGEFILE}
+
+pip freeze ${INPUT_PACKAGEFILE} | grep -iv "${INPUT_LOCALPACKAGE}" > requirements-filtered.txt
+
+pip install -r requirements-filtered.txt
 
 if [ -n "${INPUT_IGNORE}" ]; then
     echo "${INPUT_IGNORE}" | jq -r '.[]' | while read i; do
@@ -28,13 +30,13 @@ if [ -n "${INPUT_IGNORE}" ]; then
     done
 fi
 
-echo "snyk test --file=${INPUT_PACKAGEFILE} --package-manager=pip ${INPUT_OPTIONS} $*"
-OUTPUT=$(snyk test --file=${INPUT_PACKAGEFILE} --package-manager=pip ${INPUT_OPTIONS} $*)
+echo "snyk test --file=requirements-filtered.txt --package-manager=pip ${INPUT_OPTIONS} $*"
+OUTPUT=$(snyk test --file=requirements-filtered.txt --package-manager=pip ${INPUT_OPTIONS} $*)
 CODE=$?
 
 if [ "${CODE}" -ne "0" ]; then
     echo
-    snyk test --file=${INPUT_PACKAGEFILE} --package-manager=pip ${INPUT_OPTIONS} --json $* | snyk-to-html -o results.html
+    snyk test --file="requirements-filtered.txt" --package-manager=pip ${INPUT_OPTIONS} --json $* | snyk-to-html -o results.html
     echo ::set-output name=results::results.html
 fi
 
