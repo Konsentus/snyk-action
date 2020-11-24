@@ -32,9 +32,13 @@ fi
 
 echo "snyk test --file=requirements-filtered.txt --package-manager=pip ${INPUT_OPTIONS} $*"
 OUTPUT=$(snyk test --file=requirements-filtered.txt --package-manager=pip ${INPUT_OPTIONS} $*)
+
+echo "snyk dependency tree:"
+echo snyk test --file="requirements-filtered.txt"  --package-manager=pip ${INPUT_OPTIONS} --print-deps
 CODE=$?
 
 if [ "${CODE}" -ne "0" ]; then
+    
     echo
     snyk test --file="requirements-filtered.txt" --package-manager=pip ${INPUT_OPTIONS} --json $* | snyk-to-html -o results.html
     echo ::set-output name=results::results.html
