@@ -7,7 +7,7 @@ fi
 
 snyk auth ${SNYK_TOKEN}
 
-
+pip freeze > requirements.txt
 if [ -n "${INPUT_LOCALPACKAGE}" ]; then
     echo "Installing local package ${INPUT_LOCALPACKAGE}"
     pip install -e ${INPUT_LOCALPACKAGE}
@@ -20,7 +20,7 @@ if [ -n "${INPUT_SSHKEY}" ]; then
         ssh-add ~/.ssh/id_rsa
 fi
 source env/bin/activate
-pip install -r ${INPUT_PACKAGEFILE}
+pip install $(grep -ivE "${INPUT_LOCALPACKAGE}" ${INPUT_PACKAGEFILE})
 
 if [ -n "${INPUT_IGNORE}" ]; then
     echo "${INPUT_IGNORE}" | jq -r '.[]' | while read i; do
