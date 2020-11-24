@@ -7,6 +7,12 @@ fi
 
 snyk auth ${SNYK_TOKEN}
 
+
+if [ -n "${INPUT_LOCALPACKAGE}" ]; then
+    echo "Installing local package ${INPUT_LOCALPACKAGE}"
+    pip install -e ${INPUT_LOCALPACKAGE}
+fi
+
 if [ -n "${INPUT_SSHKEY}" ]; then
         mkdir ~/.ssh && chmod 700 ~/.ssh
         echo "${INPUT_SSHKEY}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
@@ -14,7 +20,7 @@ if [ -n "${INPUT_SSHKEY}" ]; then
         ssh-add ~/.ssh/id_rsa
 fi
 source env/bin/activate
-# pip install -r ${INPUT_PACKAGEFILE}
+pip install -r ${INPUT_PACKAGEFILE}
 
 if [ -n "${INPUT_IGNORE}" ]; then
     echo "${INPUT_IGNORE}" | jq -r '.[]' | while read i; do
