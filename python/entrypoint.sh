@@ -19,8 +19,8 @@ if [ -n "${INPUT_SSHKEY}" ]; then
         ssh-add ~/.ssh/id_rsa
 fi
 
-pip freeze ${INPUT_PACKAGEFILE} | grep -iv "${INPUT_LOCALPACKAGE}" > requirements-filtered.txt
-pip freeze ${INPUT_PACKAGEFILE}
+
+grep -iv "${INPUT_LOCALPACKAGE}" ${INPUT_PACKAGEFILE} > requirements-filtered.txt
 pip install -r requirements-filtered.txt
 
 if [ -n "${INPUT_IGNORE}" ]; then
