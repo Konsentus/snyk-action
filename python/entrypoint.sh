@@ -9,11 +9,11 @@ snyk auth ${SNYK_TOKEN}
 
 
 if [ -v "${INPUT_LOCALPACKAGES}" ]; then
-    for local_package in "${INPUT_LOCALPACKAGES}"  ; do 
-        pip install -e $local_package
-        echo "Installing local package ${INPUT_LOCALPACKAGES}"
-    ; done
-fi
+     for local_package in "${INPUT_LOCALPACKAGES}"
+        do 
+            pip install -e $local_package
+            echo "Installing local package ${INPUT_LOCALPACKAGES}"
+        done
 
 if [ -n "${INPUT_SSHKEY}" ]; then
         mkdir ~/.ssh && chmod 700 ~/.ssh
