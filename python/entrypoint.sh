@@ -7,10 +7,9 @@ fi
 
 snyk auth ${SNYK_TOKEN}
 
-
-echo "localpackages install requested: ${INPUT_LOCALPACKAGES}" 
 if [ -v "${INPUT_LOCALPACKAGES}" ]; then
-     for local_package in "${INPUT_LOCALPACKAGES}"
+    echo "localpackages install requested: ${INPUT_LOCALPACKAGES}" 
+     for local_package in "${INPUT_LOCALPACKAGES[@]}"
         do 
             pip install -e $local_package
             echo "Installing local package ${INPUT_LOCALPACKAGES}"
