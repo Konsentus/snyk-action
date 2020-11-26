@@ -14,15 +14,7 @@ if [ -v "${INPUT_LOCALPACKAGES}" ]; then
             pip install -e $local_package
             echo "Installing local package ${INPUT_LOCALPACKAGES}"
         done
-
-if [ -n "${INPUT_SSHKEY}" ]; then
-        mkdir ~/.ssh && chmod 700 ~/.ssh
-        echo "${INPUT_SSHKEY}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
-        eval $(ssh-agent)
-        ssh-add ~/.ssh/id_rsa
 fi
-
-
 grep -iv "${INPUT_LOCALPACKAGES}" ${INPUT_PACKAGEFILE} > requirements-filtered.txt
 pip install -r requirements-filtered.txt
 
@@ -45,11 +37,5 @@ if [ "${CODE}" -ne "0" ]; then
     snyk test --file="requirements-filtered.txt" --package-manager=pip ${INPUT_OPTIONS} --json $* | snyk-to-html -o results.html
     echo ::set-output name=results::results.html
 fi
-
-for %%r in ("https://github.com/patrikx3/gitlist" "https://github.com/patrikx3/gitter" "https://github.com/patrikx3/corifeus" "https://github.com/patrikx3/corifeus-builder" "https://github.com/patrikx3/gitlist-workspace" "https://github.com/patrikx3/onenote" "https://github.com/patrikx3/resume-web") do (
-   echo %%r
-   git clone --bare %%r
-)
-
 
 exit ${CODE}
