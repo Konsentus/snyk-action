@@ -1,7 +1,7 @@
 name: Snyk Scanner
 description: Check dependencies with Snyk
 inputs:
-  localPackage:
+  localPackages:
     description: An optional package to install from local
     required: false
   packageFile:

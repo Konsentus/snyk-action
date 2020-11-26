@@ -8,8 +8,6 @@ fi
 snyk auth ${SNYK_TOKEN}
 
 
-
-
 if [ -v "${INPUT_LOCALPACKAGES}" ]; then
     for local_package in "${INPUT_LOCALPACKAGES}"  ; do 
         pip install -e $local_package
