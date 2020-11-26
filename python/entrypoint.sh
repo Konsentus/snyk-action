@@ -10,14 +10,18 @@ snyk auth ${SNYK_TOKEN}
 localpackages_str=$(echo $INPUT_LOCALPACKAGES |  tr -d [])
 
 IFS="," read -a local_packages <<< $localpackages_str
+
+
+grep_package_pattern = ""
 for local_package in ${local_packages[@]}
     do 
         echo "Installing local package $local_package"
         pip install -e $local_package
-
     done
 
-grep -iv "${INPUT_LOCALPACKAGES}" ${INPUT_PACKAGEFILE} > requirements-filtered.txt
+grep_exlude_pkg_pattern = $(echo $localpackages_str | tr , \|)  #Construct grep exclusion pattern
+
+grep -iv "${grep_exlude_pkg_pattern}" ${INPUT_PACKAGEFILE} > requirements-filtered.txt
 pip install -r requirements-filtered.txt
 
 if [ -n "${INPUT_IGNORE}" ]; then
