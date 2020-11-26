@@ -7,14 +7,12 @@ fi
 
 snyk auth ${SNYK_TOKEN}
 
-if [ -v "${INPUT_LOCALPACKAGES}" ]; then
-    echo "localpackages install requested: ${INPUT_LOCALPACKAGES}" 
-     for local_package in "${INPUT_LOCALPACKAGES[@]}"
-        do 
-            pip install -e $local_package
-            echo "Installing local package ${INPUT_LOCALPACKAGES}"
-        done
-fi
+for local_package in "${INPUT_LOCALPACKAGES[@]}"
+    do 
+        pip install -e $local_package
+        echo "Installing local package $local_package"
+    done
+
 grep -iv "${INPUT_LOCALPACKAGES}" ${INPUT_PACKAGEFILE} > requirements-filtered.txt
 pip install -r requirements-filtered.txt
 
