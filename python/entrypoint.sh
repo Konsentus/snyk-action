@@ -7,9 +7,14 @@ fi
 
 snyk auth ${SNYK_TOKEN}
 
-if [ -n "${INPUT_LOCALPACKAGE}" ]; then
-    echo "Installing local package ${INPUT_LOCALPACKAGE}"
-    pip install -e ${INPUT_LOCALPACKAGE}
+
+
+
+if [ -v "${INPUT_LOCALPACKAGES}" ]; then
+    for local_package in "${INPUT_LOCALPACKAGES}"  ; do 
+        pip install -e $local_package
+        echo "Installing local package ${INPUT_LOCALPACKAGES}"
+    ; done
 fi
 
 if [ -n "${INPUT_SSHKEY}" ]; then
@@ -20,7 +25,7 @@ if [ -n "${INPUT_SSHKEY}" ]; then
 fi
 
 
-grep -iv "${INPUT_LOCALPACKAGE}" ${INPUT_PACKAGEFILE} > requirements-filtered.txt
+grep -iv "${INPUT_LOCALPACKAGES}" ${INPUT_PACKAGEFILE} > requirements-filtered.txt
 pip install -r requirements-filtered.txt
 
 if [ -n "${INPUT_IGNORE}" ]; then
@@ -38,13 +43,15 @@ snyk test --file="requirements-filtered.txt"  --package-manager=pip ${INPUT_OPTI
 CODE=$?
 
 if [ "${CODE}" -ne "0" ]; then
-    
     echo
     snyk test --file="requirements-filtered.txt" --package-manager=pip ${INPUT_OPTIONS} --json $* | snyk-to-html -o results.html
     echo ::set-output name=results::results.html
 fi
 
-
+for %%r in ("https://github.com/patrikx3/gitlist" "https://github.com/patrikx3/gitter" "https://github.com/patrikx3/corifeus" "https://github.com/patrikx3/corifeus-builder" "https://github.com/patrikx3/gitlist-workspace" "https://github.com/patrikx3/onenote" "https://github.com/patrikx3/resume-web") do (
+   echo %%r
+   git clone --bare %%r
+)
 
 
 exit ${CODE}
