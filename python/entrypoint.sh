@@ -8,6 +8,7 @@ fi
 snyk auth ${SNYK_TOKEN}
 
 
+echo "localpackages install requested: ${INPUT_LOCALPACKAGES}" 
 if [ -v "${INPUT_LOCALPACKAGES}" ]; then
      for local_package in "${INPUT_LOCALPACKAGES}"
         do 
