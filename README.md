@@ -10,8 +10,26 @@ A GitHub action to use Snyk to check project for dependency vulnerabilities
    ```yml
    - uses: konsentus/snyk-action/python@master
      with:
-       ignore: ['SNYK', 'VULNERABILITY', 'IDS', 'TO', 'IGNORE']
+       ignore: ["SNYK", "VULNERABILITY", "IDS", "TO", "IGNORE"]
      env:
        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
    ```
 4. See the relevant action.yml file for additional information for each language.
+
+## Optional Inputs
+
+### localPackages
+
+To handle installation of private repos, references to local packages which have already been downloaded can be passed into this action.
+
+```yml
+  - name: Download private dependencies
+        run: |
+          git clone git@github.com:Konsentus/lib.activitylogging.python.git
+
+- uses: konsentus/snyk-action/python@master
+  with:
+    localPackages: |
+      [lib.activitylogging.python]
+    packageFile: requirements-locked.txt
+```
