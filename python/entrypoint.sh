@@ -32,7 +32,7 @@ if [ -n "${INPUT_LOCALPACKAGES}" ]; then
 fi
 
 
-pip install -r req_file
+pip install -r ${req_file}
 
 if [ -n "${INPUT_IGNORE}" ]; then
     echo "${INPUT_IGNORE}" | jq -r '.[]' | while read i; do
