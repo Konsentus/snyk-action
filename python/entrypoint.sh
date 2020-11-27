@@ -12,8 +12,8 @@ snyk auth ${SNYK_TOKEN}
 req_file=${INPUT_PACKAGEFILE}
 if [ -n "${INPUT_LOCALPACKAGES}" ]; then
     echo "Local package input detected"
-    localpackages_str=$(echo $INPUT_LOCALPACKAGES |  tr -d []) #Remove [] from array string
-
+    localpackages_str=$(echo $INPUT_LOCALPACKAGES |  tr -d "[] \t\n\r"  ) #Remove [] and whitespace from array string
+    
     if [ -n "${localpackages_str}" ]; then
         echo "Local package array not empty, attempt install"
         IFS="," read -a local_packages <<< $localpackages_str #Convert str to array
@@ -24,7 +24,7 @@ if [ -n "${INPUT_LOCALPACKAGES}" ]; then
             pip install -e $local_package
             done
 
-        exlude_pkg_pattern=$(echo $localpackages_str | sed 's/,/\\|/g' | tr -d " \t\n\r"  ) #Construct grep exclusion pattern
+        exlude_pkg_pattern=$(echo $localpackages_str | sed 's/,/\\|/g') #Construct grep exclusion pattern
         echo "filtering using exclusion pattern: ${exlude_pkg_pattern}"
 
         req_file="requirements-filtered.txt"
