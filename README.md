@@ -27,9 +27,9 @@ To handle installation of private repos, references to local packages which have
         run: |
           git clone git@github.com:Konsentus/lib.activitylogging.python.git
 
-- uses: konsentus/snyk-action/python@master
-  with:
-    localPackages: |
-      [lib.activitylogging.python]
-    packageFile: requirements-locked.txt
+  - uses: konsentus/snyk-action/python@master
+    with:
+      localPackages: |
+        [lib.activitylogging.python]
+      packageFile: requirements-locked.txt
 ```
