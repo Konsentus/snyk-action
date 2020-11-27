@@ -24,7 +24,7 @@ if [ -n "${INPUT_LOCALPACKAGES}" ]; then
             pip install -e $local_package
             done
 
-        exlude_pkg_pattern=$(echo $localpackages_str | sed 's/,/\\|/g') #Construct grep exclusion pattern
+        exlude_pkg_pattern=$(echo $localpackages_str | sed 's/,/\\|/g' | tr -d " \t\n\r"  ) #Construct grep exclusion pattern
         echo "filtering using exclusion pattern: ${exlude_pkg_pattern}"
 
         req_file="requirements-filtered.txt"
