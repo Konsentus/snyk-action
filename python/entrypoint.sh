@@ -7,20 +7,31 @@ fi
 
 snyk auth ${SNYK_TOKEN}
 
-localpackages_str=$(echo $INPUT_LOCALPACKAGES |  tr -d [])
 
-IFS="," read -a local_packages <<< $localpackages_str
 
-for local_package in ${local_packages[@]}
-    do 
-        echo "Installing local package $local_package"
-        pip install -e $local_package
-    done
+package_file=${INPUT_PACKAGEFILE}
+if [ -n "${INPUT_LOCALPACKAGES}" ]; then
+    echo "yes"
+    localpackages_str=$(echo $INPUT_LOCALPACKAGES |  tr -d []) #Remove [] from array string
 
-exlude_pkg_pattern=$(echo $localpackages_str | tr , \|)  #Construct grep exclusion pattern
+    if [ -n "${localpackages_str}" ]; then
+         IFS="," read -a local_packages <<< $localpackages_str #Convert str to array
 
-grep -iv "${exlude_pkg_pattern}" ${INPUT_PACKAGEFILE} > requirements-filtered.txt
-pip install -r requirements-filtered.txt
+        for local_package in ${local_packages[@]}
+            do 
+            echo "Installing local package $local_package"
+            pip install -e $local_package
+            done
+
+        exlude_pkg_pattern=$(echo $localpackages_str | tr , \|)  #Construct grep exclusion pattern
+
+        package_file= "requirements-filtered.txt"
+        grep -iv "${exlude_pkg_pattern}" ${INPUT_PACKAGEFILE} > package_file
+    fi
+fi
+
+
+pip install -r package_file
 
 if [ -n "${INPUT_IGNORE}" ]; then
     echo "${INPUT_IGNORE}" | jq -r '.[]' | while read i; do
