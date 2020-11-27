@@ -25,7 +25,7 @@ if [ -n "${INPUT_LOCALPACKAGES}" ]; then
 
         exlude_pkg_pattern=$(echo $localpackages_str | tr , \|)  #Construct grep exclusion pattern
 
-        package_file= "requirements-filtered.txt"
+        package_file="requirements-filtered.txt"
         grep -iv "${exlude_pkg_pattern}" ${INPUT_PACKAGEFILE} > package_file
     fi
 fi
