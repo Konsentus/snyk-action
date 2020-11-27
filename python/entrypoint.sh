@@ -9,7 +9,7 @@ snyk auth ${SNYK_TOKEN}
 
 
 
-package_file=${INPUT_PACKAGEFILE}
+req_file=${INPUT_PACKAGEFILE}
 if [ -n "${INPUT_LOCALPACKAGES}" ]; then
     echo "Local package input detected"
     localpackages_str=$(echo $INPUT_LOCALPACKAGES |  tr -d []) #Remove [] from array string
@@ -26,13 +26,13 @@ if [ -n "${INPUT_LOCALPACKAGES}" ]; then
 
         exlude_pkg_pattern=$(echo $localpackages_str | tr , \|)  #Construct grep exclusion pattern
 
-        package_file="requirements-filtered.txt"
-        grep -iv "${exlude_pkg_pattern}" ${INPUT_PACKAGEFILE} > ${package_file}
+        req_file="requirements-filtered.txt"
+        grep -iv "${exlude_pkg_pattern}" ${INPUT_PACKAGEFILE} > ${req_file}
     fi
 fi
 
 
-pip install -r package_file
+pip install -r req_file
 
 if [ -n "${INPUT_IGNORE}" ]; then
     echo "${INPUT_IGNORE}" | jq -r '.[]' | while read i; do
@@ -41,16 +41,16 @@ if [ -n "${INPUT_IGNORE}" ]; then
     done
 fi
 
-echo "snyk test --file=requirements-filtered.txt --package-manager=pip ${INPUT_OPTIONS} $*"
-OUTPUT=$(snyk test --file=requirements-filtered.txt --package-manager=pip ${INPUT_OPTIONS} $*)
+echo "snyk test --file=${req_file} --package-manager=pip ${INPUT_OPTIONS} $*"
+OUTPUT=$(snyk test --file=${req_file} --package-manager=pip ${INPUT_OPTIONS} $*)
 
 echo "snyk dependency tree:"
-snyk test --file="requirements-filtered.txt"  --package-manager=pip ${INPUT_OPTIONS} --print-deps
+snyk test --file=${req_file}  --package-manager=pip ${INPUT_OPTIONS} --print-deps
 CODE=$?
 
 if [ "${CODE}" -ne "0" ]; then
     echo
-    snyk test --file="requirements-filtered.txt" --package-manager=pip ${INPUT_OPTIONS} --json $* | snyk-to-html -o results.html
+    snyk test --file=${req_file} --package-manager=pip ${INPUT_OPTIONS} --json $* | snyk-to-html -o results.html
     echo ::set-output name=results::results.html
 fi
 
