@@ -11,11 +11,12 @@ snyk auth ${SNYK_TOKEN}
 
 package_file=${INPUT_PACKAGEFILE}
 if [ -n "${INPUT_LOCALPACKAGES}" ]; then
-    echo "yes"
+    echo "Local package input detected"
     localpackages_str=$(echo $INPUT_LOCALPACKAGES |  tr -d []) #Remove [] from array string
 
     if [ -n "${localpackages_str}" ]; then
-         IFS="," read -a local_packages <<< $localpackages_str #Convert str to array
+        echo "Local package array not empty, attempt install"
+        IFS="," read -a local_packages <<< $localpackages_str #Convert str to array
 
         for local_package in ${local_packages[@]}
             do 
@@ -26,7 +27,7 @@ if [ -n "${INPUT_LOCALPACKAGES}" ]; then
         exlude_pkg_pattern=$(echo $localpackages_str | tr , \|)  #Construct grep exclusion pattern
 
         package_file="requirements-filtered.txt"
-        grep -iv "${exlude_pkg_pattern}" ${INPUT_PACKAGEFILE} > package_file
+        grep -iv "${exlude_pkg_pattern}" ${INPUT_PACKAGEFILE} > ${package_file}
     fi
 fi
 
