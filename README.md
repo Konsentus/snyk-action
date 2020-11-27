@@ -34,10 +34,13 @@ the localPackages flag.
   - name: Download private dependencies
         run: |
           git clone git@github.com:Konsentus/lib.activitylogging.python.git
+          git clone git@github.com:Konsentus/lib.certificates.git
+
 
   - uses: konsentus/snyk-action/python@master
     with:
       localPackages: |
-        [lib.activitylogging.python]
+             [lib.activitylogging.python,
+              lib.certificates]
       packageFile: requirements-locked.txt
 ```
