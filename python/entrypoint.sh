@@ -7,8 +7,6 @@ fi
 
 snyk auth ${SNYK_TOKEN}
 
-
-
 req_file=${INPUT_PACKAGEFILE}
 if [ -n "${INPUT_LOCALPACKAGES}" ]; then
     echo "Local package input detected"
@@ -31,7 +29,6 @@ if [ -n "${INPUT_LOCALPACKAGES}" ]; then
         grep -iv "${exlude_pkg_pattern}" ${INPUT_PACKAGEFILE} > ${req_file}
     fi
 fi
-
 
 pip install -r ${req_file}
 
