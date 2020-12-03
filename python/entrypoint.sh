@@ -10,6 +10,8 @@ snyk auth ${SNYK_TOKEN}
 req_file=${INPUT_PACKAGEFILE}
 if [ -n "${INPUT_LOCALPACKAGES}" ]; then
     echo "Local package input detected"
+    python -m pip install  --upgrade pip==20.2.4         #Downgrade pip to below 20.3 which introduces incompatible dependency resolver 
+
     localpackages_str=$(echo $INPUT_LOCALPACKAGES |  tr -d "[] \t\n\r"  ) #Remove [] and whitespace from array string
     
     if [ -n "${localpackages_str}" ]; then
