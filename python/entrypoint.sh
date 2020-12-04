@@ -7,9 +7,9 @@ fi
 
 if [ -n "${BOT_SSH_KEY}" ]; then
     mkdir ~/.ssh && chmod 700 ~/.ssh
-    echo "${BOT_SSH_KEY}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+    echo "${BOT_SSH_KEY}" > ~/.ssh/id_rsa.pub && chmod 600 ~/.ssh/id_rsa.pub
     eval $(ssh-agent)
-    ssh-add ~/.ssh/id_rsa
+    ssh-add ~/.ssh/id_rsa.pub
 fi
 
 snyk auth ${SNYK_TOKEN}
