@@ -7,7 +7,11 @@ fi
 
 snyk auth ${SNYK_TOKEN}
 
-pip install -r ${INPUT_PACKAGEFILE}
+if [ -n "${INPUT_DOWNLOADDIR}" ]; then
+    pip install --no-index --find-links=${INPUT_DOWNLOADDIR} -r ${INPUT_PACKAGEFILE}
+else
+    pip install -r ${INPUT_PACKAGEFILE}
+fi
 
 if [ -n "${INPUT_IGNORE}" ]; then
     echo "${INPUT_IGNORE}" | jq -r '.[]' | while read i; do
