@@ -7,8 +7,10 @@ fi
 
 snyk auth ${SNYK_TOKEN}
 
+python -m pip install  --upgrade pip==20.2.4
+
 if [ -n "${INPUT_DOWNLOADDIR}" ]; then
-    pip install --no-index --find-links=${INPUT_DOWNLOADDIR} -r ${INPUT_PACKAGEFILE}
+    pip install --find-links=${INPUT_DOWNLOADDIR} -r ${INPUT_PACKAGEFILE}
 else
     pip install -r ${INPUT_PACKAGEFILE}
 fi
