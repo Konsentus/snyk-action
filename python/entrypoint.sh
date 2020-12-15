@@ -9,7 +9,7 @@ snyk auth ${SNYK_TOKEN}
 
 req_file=${INPUT_PACKAGEFILE}
 
-if [ -n "${USE_OLD_PIP}" ]; then
+if [ -n "${INPUT_USE_OLD_PIP}" ]; then
     echo "using older pinned pip 20.2.4"
     python -m pip install  --upgrade pip==20.2.4         #Downgrade pip to below 20.3 which introduces incompatible dependency resolver 
 fi
