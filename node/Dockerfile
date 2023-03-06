@@ -1,4 +1,4 @@
-FROM snyk/snyk-cli:node
+FROM snyk/snyk-cli:1.263.0-npm
 
 ADD entrypoint.sh /entrypoint.sh
 
