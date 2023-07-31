@@ -2,7 +2,7 @@ FROM snyk/snyk:node
 
 ADD entrypoint.sh /entrypoint.sh
 
-RUN apt-get install -y jq
+RUN pacman -Syu jq
 
 RUN npm install snyk-to-html -g
 
