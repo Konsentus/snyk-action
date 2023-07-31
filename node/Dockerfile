@@ -1,8 +1,8 @@
-FROM snyk/snyk-cli:npm
+FROM snyk/snyk:node
 
 ADD entrypoint.sh /entrypoint.sh
 
-RUN apt-get install -y jq
+RUN apt-get update && apt-get -y install jq
 
 RUN npm install snyk-to-html -g
 
