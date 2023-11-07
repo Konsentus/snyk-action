@@ -1,4 +1,4 @@
-FROM snyk/snyk-cli:python-3
+FROM snyk/snyk-cli:python-3.6
 
 ADD entrypoint.sh /entrypoint.sh
 
