@@ -1,5 +1,7 @@
 FROM snyk/snyk-cli:python-3.6
 
+RUN python -m pip install  --upgrade pip
+
 ADD entrypoint.sh /entrypoint.sh
 
 RUN apt-get install nodejs

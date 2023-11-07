@@ -10,21 +10,21 @@ snyk auth ${SNYK_TOKEN}
 req_file=${INPUT_PACKAGEFILE}
 
 if [ -n "${INPUT_USEOLDPIP}" ]; then
-    echo "using older pinned pip 20.2.4"
-    python -m pip install  --upgrade pip==20.2.4         #Downgrade pip to below 20.3 which introduces incompatible dependency resolver 
+    # echo "using older pinned pip 20.2.4"
+    python -m pip install  --upgrade pip         #Downgrade pip to below 20.3 which introduces incompatible dependency resolver
 fi
 
 if [ -n "${INPUT_LOCALPACKAGES}" ]; then
     echo "Local package input detected"
 
     localpackages_str=$(echo $INPUT_LOCALPACKAGES |  tr -d "[] \t\n\r"  ) #Remove [] and whitespace from array string
-    
+
     if [ -n "${localpackages_str}" ]; then
         echo "Local package array not empty, attempt install"
         IFS="," read -a local_packages <<< $localpackages_str #Convert str to array
 
         for local_package in ${local_packages[@]}
-            do 
+            do
             echo "Installing local package $local_package"
             pip install -e $local_package
             done
