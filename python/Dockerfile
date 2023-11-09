@@ -1,4 +1,4 @@
-FROM snyk/snyk-cli:python-3.6
+FROM snyk/snyk:python-3.9
 
 RUN python -m pip install  --upgrade pip
 
