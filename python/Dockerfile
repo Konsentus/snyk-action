@@ -6,11 +6,7 @@ ADD entrypoint.sh /entrypoint.sh
 
 RUN apt-get update
 
-RUN apt-get install -y nodejs
-
-RUN apt-get install -y npm
-
-RUN apt-get install -y jq
+RUN apt-get install -y nodejs npm jq
 
 RUN npm install snyk-to-html -g
 
