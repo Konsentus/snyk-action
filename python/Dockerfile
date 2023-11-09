@@ -4,7 +4,9 @@ RUN python -m pip install  --upgrade pip
 
 ADD entrypoint.sh /entrypoint.sh
 
-# RUN apt-get install nodejs
+RUN apt-get update
+
+RUN apt-get install nodejs
 
 RUN apt-get install -y jq
 
