@@ -9,10 +9,7 @@ snyk auth ${SNYK_TOKEN}
 
 req_file=${INPUT_PACKAGEFILE}
 
-if [ -n "${INPUT_USEOLDPIP}" ]; then
-    # echo "using older pinned pip 20.2.4"
-    python -m pip install  --upgrade pip         #Downgrade pip to below 20.3 which introduces incompatible dependency resolver
-fi
+python -m pip install  --upgrade pip
 
 if [ -n "${INPUT_LOCALPACKAGES}" ]; then
     echo "Local package input detected"

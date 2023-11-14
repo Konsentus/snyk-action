@@ -4,9 +4,6 @@ inputs:
   localPackages:
     description: Optional packages to install from local
     required: false
-  useOldPip:
-    description: Downgrades Pip to 20.2.4 in Snyk container
-    required: false
   packageFile:
     description: The package file to scan for dependencies
     required: false
@@ -21,8 +18,8 @@ outputs:
   results:
     description: Any found vulnerability results
 runs:
-  using: "docker"
-  image: "Dockerfile"
+  using: 'docker'
+  image: 'Dockerfile'
 branding:
-  icon: "shield"
-  color: "purple"
+  icon: 'shield'
+  color: 'purple'
