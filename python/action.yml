@@ -8,6 +8,9 @@ inputs:
     description: The package file to scan for dependencies
     required: false
     default: requirements.txt
+  lockFile:
+    description: If using poetry, the poetry lockfile used to specify exact dependency versions
+    required: false
   ignore:
     description: Provide list of vulnerabilities to ignore
     required: false

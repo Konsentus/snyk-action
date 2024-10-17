@@ -34,7 +34,17 @@ if [ -n "${INPUT_LOCALPACKAGES}" ]; then
     fi
 fi
 
-pip install -r ${req_file}
+package_manager=pip
+
+if [ -n "${INPUT_LOCKFILE}" ]; then
+    echo "using poetry"
+    package_manager=poetry
+    req_file=${INPUT_LOCKFILE}
+    pip install poetry
+else
+    pip install -r ${req_file}
+fi
+
 
 if [ -n "${INPUT_IGNORE}" ]; then
     echo "${INPUT_IGNORE}" | jq -r '.[]' | while read i; do
@@ -43,16 +53,16 @@ if [ -n "${INPUT_IGNORE}" ]; then
     done
 fi
 
-echo "snyk test --file=${req_file} --package-manager=pip ${INPUT_OPTIONS} $*"
-OUTPUT=$(snyk test --file=${req_file} --package-manager=pip ${INPUT_OPTIONS} $*)
+echo "snyk test --file=${req_file} --package-manager=${package_manager} ${INPUT_OPTIONS} $*"
+OUTPUT=$(snyk test --file=${req_file} --package-manager=${package_manager} ${INPUT_OPTIONS} $*)
 
 echo "snyk dependency tree:"
-snyk test --file=${req_file}  --package-manager=pip ${INPUT_OPTIONS} --print-deps
+snyk test --file=${req_file}  --package-manager=${package_manager} ${INPUT_OPTIONS} --print-deps
 CODE=$?
 
 if [ "${CODE}" -ne "0" ]; then
     echo
-    snyk test --file=${req_file} --package-manager=pip ${INPUT_OPTIONS} --json $* | snyk-to-html -o results.html
+    snyk test --file=${req_file} --package-manager=${package_manager} ${INPUT_OPTIONS} --json $* | snyk-to-html -o results.html
     echo ::set-output name=results::results.html
 fi
 
